@@ -2,7 +2,7 @@
 Summary:	Terminal emulator in a web browser
 Name:		anyterm
 Version:	1.1.4
-Release:	0.7
+Release:	0.8
 Epoch:		0
 License:	GPL
 Group:		Networking/Daemons
@@ -81,11 +81,10 @@ rm -rf $RPM_BUILD_ROOT
 %post
 %service httpd restart
 
-if [ "$1" = 1 ]; then
-	%banner %{name} <<-EOF
-	To use anygetty, you need to setuid it.
-	EOF
-fi
+%banner %{name} <<-EOF
+To use anygetty, you need to setuid it:
+chmod 4755 %{_sbindir}/anygetty
+EOF
 
 %preun
 if [ "$1" = "0" ]; then
