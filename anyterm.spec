@@ -2,7 +2,7 @@
 Summary:	Terminal emulator in a web browser
 Name:		anyterm
 Version:	1.1.4
-Release:	0.3
+Release:	0.7
 Epoch:		0
 License:	GPL
 Group:		Networking/Daemons
@@ -41,15 +41,32 @@ mv -f browser/.htaccess htaccess
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir}/httpd.conf,%{_pkglibdir},%{_mandir}/man8,%{_appdir}}
 
-cat > $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf/70_anyterm.conf <<END
+cat > $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf/70_anyterm.conf <<'END'
 LoadModule anyterm modules/%{name}.so
 <IfModule anyterm>
 	Alias /%{name} "%{_appdir}"
-	anyterm_command '%{_sbindir}/anygetty --remotehost "Anyterm: %h"'
+	# hangs on login:
+#	anyterm_command '%{_sbindir}/anygetty --remotehost "Anyterm: %h"'
+	# works for me:
+	anyterm_command "USER=%u; exec /usr/bin/ssh ${USER:+$USER@}localhost"
 
 	<Files anyterm-module>
 		SetHandler anyterm
 	</Files>
+
+#	<Location /%{name}>
+#		allow from all
+#	</Location>
+
+    <Location /%{name}>
+        AuthType Basic
+        AuthUserFile /etc/httpd/user
+        AuthGroupFile /etc/httpd/group
+        AuthName "AnyTerm"
+        require group anyterm
+        satisfy any
+        order allow,deny
+    </Location>
 </IfModule>
 # vim: filetype=apache ts=4 sw=4 et
 END
@@ -64,9 +81,11 @@ rm -rf $RPM_BUILD_ROOT
 %post
 %service httpd restart
 
-%banner %{name} <<EOF
-For full function, setuid %{_sbindir}/anygetty.
-EOF
+if [ "$1" = 1 ]; then
+	%banner %{name} <<-EOF
+	To use anygetty, you need to setuid it.
+	EOF
+fi
 
 %preun
 if [ "$1" = "0" ]; then
