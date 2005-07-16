@@ -1,0 +1,36 @@
+diff -ur anyterm-1.1.4-o/apachemod/lock.h anyterm-1.1.4/apachemod/lock.h
+--- anyterm-1.1.4-o/apachemod/lock.h	2005-06-23 15:20:33.000000000 -0600
++++ anyterm-1.1.4/apachemod/lock.h	2005-07-15 21:06:16.000000000 -0600
+@@ -31,8 +31,8 @@
+ 
+ #include <apr_atomic.h>
+ #define atomic_type apr_uint32_t
+-#define atomic_add(var,val) apr_atomic_add(&(var),(atomic_type)(val))
+-#define atomic_compare_and_set(var,cmpwith,setto) (apr_atomic_cas(&(var),(setto),(cmpwith))==(cmpwith))
++#define atomic_add(var,val) apr_atomic_add32(&(var),(atomic_type)(val))
++#define atomic_compare_and_set(var,cmpwith,setto) (apr_atomic_cas32(&(var),(setto),(cmpwith))==(cmpwith))
+ 
+ 
+ class Mutex {
+diff -ur anyterm-1.1.4-o/apachemod/Makefile anyterm-1.1.4/apachemod/Makefile
+--- anyterm-1.1.4-o/apachemod/Makefile	2005-07-10 16:05:48.000000000 -0600
++++ anyterm-1.1.4/apachemod/Makefile	2005-07-15 21:05:23.000000000 -0600
+@@ -35,7 +35,8 @@
+ 
+ CPP_FLAGS=$(shell rote-config --cflags) \
+ 	$(shell $(APR_CONFIG) --cppflags --includes) \
+-	-I$(shell $(APXS2) -q INCLUDEDIR)
++	-I$(shell $(APXS2) -q INCLUDEDIR) \
++	$(INCLUDES)
+ 
+ COMPILE_FLAGS=$(CPP_FLAGS) $(shell $(APR_CONFIG) --cflags) -Wall -O
+ 
+@@ -52,7 +53,7 @@
+ 
+ 
+ %.lo: %.cc
+-	libtool --mode=compile g++ $(CC_COMPILE_FLAGS) -o $@ -c $<
++	libtool --mode=compile --tag=CXX g++ $(CC_COMPILE_FLAGS) -o $@ -c $<
+ 
+ %.lo: %.c
+ 	libtool --mode=compile gcc $(C_COMPILE_FLAGS) -o $@ -c $<
