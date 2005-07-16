@@ -31,16 +31,11 @@ An apache module plus scripts to make a terminal within a web browser.
 mv -f browser/.htaccess htaccess
 
 %build
-rm -rf $RPM_BUILD_ROOT
-cd apachemod
-%{__make} \
+%{__make} -C apachemod \
 	INCLUDES='-I%{_includedir}/apr-util' \
 	APXS2=%{apxs} \
 	APR_CONFIG=apr-1-config
-cd ..
-cd anygetty
-%{__make}
-cd ..
+%{__make} -C anygetty
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -80,7 +75,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc README htaccess
+%doc README CHANGELOG htaccess
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf/*
 %attr(755,root,root) %{_pkglibdir}/%{name}.so
 %attr(755,root,root) %{_sbindir}/anygetty
