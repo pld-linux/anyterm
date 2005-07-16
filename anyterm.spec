@@ -1,10 +1,9 @@
-#
 %define 	apxs		/usr/sbin/apxs
 Summary:	Terminal emulator in a web browser
 Name:		anyterm
 Version:	1.1.4
-Release:	1
-Epoch:		1
+Release:	0.1
+Epoch:		0
 License:	GPL
 Group:		Networking/Daemons
 Source0:	http://anyterm.org/download/%{name}-%{version}.tbz2
@@ -19,7 +18,7 @@ BuildRequires:	%{apxs}
 Requires:	apache >= 2.0.52-2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_httpdir	/home/services/httpd
+%define		_httpdir	%{_datadir}/%{name}
 %define		_pkglibdir	%(%{apxs} -q LIBEXECDIR 2>/dev/null)
 %define		_sysconfdir /etc/httpd
 
