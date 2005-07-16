@@ -2,7 +2,7 @@
 Summary:	Terminal emulator in a web browser
 Name:		anyterm
 Version:	1.1.4
-Release:	0.8
+Release:	0.9
 Epoch:		0
 License:	GPL
 Group:		Networking/Daemons
@@ -54,19 +54,23 @@ LoadModule anyterm modules/%{name}.so
 		SetHandler anyterm
 	</Files>
 
-#	<Location /%{name}>
-#		allow from all
-#	</Location>
+	<IfModule !mod_auth.c>
+		<Location /%{name}>
+			allow from all
+		</Location>
+	</IfModule>
 
-    <Location /%{name}>
-        AuthType Basic
-        AuthUserFile /etc/httpd/user
-        AuthGroupFile /etc/httpd/group
-        AuthName "AnyTerm"
-        require group anyterm
-        satisfy any
-        order allow,deny
-    </Location>
+	<IfModule mod_auth.c>
+		<Location /%{name}>
+			AuthType Basic
+			AuthUserFile /etc/httpd/user
+			AuthGroupFile /etc/httpd/group
+			AuthName "AnyTerm"
+			require group anyterm
+			satisfy any
+			order allow,deny
+		</Location>
+	</IfModule>
 </IfModule>
 # vim: filetype=apache ts=4 sw=4 et
 END
