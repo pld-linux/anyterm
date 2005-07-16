@@ -1,3 +1,7 @@
+# TODO
+# - anygetty hangs due /bin/login calling vhangup()
+#   http://anyterm.org/1.0/config.html
+# - put anygetty to separate package?
 %define 	apxs		/usr/sbin/apxs
 Summary:	Terminal emulator in a web browser
 Name:		anyterm
@@ -52,6 +56,12 @@ LoadModule anyterm modules/%{name}.so
 
 	<Files anyterm-module>
 		SetHandler anyterm
+		<IfModule mod_setenv.c>
+			# for this to work you need to change CustomLog:
+			# CustomLog /path/to/logfile combined env=!DONTLOG
+			# http://anyterm.org/security.html
+			SetEnv DONTLOG
+		</IfModule>
 	</Files>
 
 	<IfModule !mod_auth.c>
