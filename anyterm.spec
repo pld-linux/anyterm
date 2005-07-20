@@ -25,7 +25,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_appdir		%{_datadir}/%{name}
 %define		_pkglibdir	%(%{apxs} -q LIBEXECDIR 2>/dev/null)
-%define		_sysconfdir /etc/httpd
+%define		_sysconfdir	/etc/httpd
 
 %description
 An Apache module plus scripts to make a terminal within a web browser.
