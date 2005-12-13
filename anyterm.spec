@@ -15,11 +15,11 @@ Source0:	http://anyterm.org/download/%{name}-%{version}.tbz2
 # Source0-md5:	cf841703b7438866e573f5a33137ff6f
 Patch0:		%{name}-makefile.patch
 URL:		http://anyterm.org/
+BuildRequires:	%{apxs}
 BuildRequires:	apache-devel >= 2.0.52-2
 BuildRequires:	apr-devel
 BuildRequires:	rote-devel >= 0.2.8
 BuildRequires:	rpmbuild(macros) >= 1.228
-BuildRequires:	%{apxs}
 Requires:	apache >= 2.0.52-2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
