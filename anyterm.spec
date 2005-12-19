@@ -7,7 +7,7 @@ Summary:	Terminal emulator in a web browser
 Summary(pl):	Emulator terminala dzia³aj±cy w przegl±darce WWW
 Name:		anyterm
 Version:	1.1.4
-Release:	0.9
+Release:	0.10
 Epoch:		0
 License:	GPL
 Group:		Networking/Daemons
@@ -20,12 +20,13 @@ BuildRequires:	apache-devel >= 2.0.52-2
 BuildRequires:	apr-devel
 BuildRequires:	rote-devel >= 0.2.8
 BuildRequires:	rpmbuild(macros) >= 1.228
+Requires:	apache(modules-api) = %apache_modules_api
 Requires:	apache >= 2.0.52-2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_appdir		%{_datadir}/%{name}
 %define		_pkglibdir	%(%{apxs} -q LIBEXECDIR 2>/dev/null)
-%define		_sysconfdir	/etc/httpd
+%define		_sysconfdir	%(%{apxs} -q SYSCONFDIR 2>/dev/null)
 
 %description
 An Apache module plus scripts to make a terminal within a web browser.
