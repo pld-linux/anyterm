@@ -20,8 +20,8 @@ BuildRequires:	apache-devel >= 2.0.52-2
 BuildRequires:	apr-devel
 BuildRequires:	rote-devel >= 0.2.8
 BuildRequires:	rpmbuild(macros) >= 1.228
-Requires:	apache(modules-api) = %apache_modules_api
 Requires:	apache >= 2.0.52-2
+Requires:	apache(modules-api) = %apache_modules_api
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_appdir		%{_datadir}/%{name}
@@ -92,7 +92,7 @@ END
 
 install apachemod/.libs/%{name}.so $RPM_BUILD_ROOT%{_pkglibdir}/%{name}.so
 cp -a browser/* $RPM_BUILD_ROOT%{_appdir}
-install anygetty/anygetty $RPM_BUILD_ROOT/%{_sbindir}
+install anygetty/anygetty $RPM_BUILD_ROOT%{_sbindir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
