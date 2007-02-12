@@ -4,7 +4,7 @@
 # - put anygetty to separate package?
 %define 	apxs		/usr/sbin/apxs
 Summary:	Terminal emulator in a web browser
-Summary(pl):	Emulator terminala dzia³aj±cy w przegl±darce WWW
+Summary(pl.UTF-8):   Emulator terminala dziaÅ‚ajÄ…cy w przeglÄ…darce WWW
 Name:		anyterm
 Version:	1.1.4
 Release:	0.10
@@ -31,8 +31,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 An Apache module plus scripts to make a terminal within a web browser.
 
-%description -l pl
-Modu³ Apache'a i skrypty tworz±ce terminal w przegl±darce WWW.
+%description -l pl.UTF-8
+ModuÅ‚ Apache'a i skrypty tworzÄ…ce terminal w przeglÄ…darce WWW.
 
 %prep
 %setup -q
