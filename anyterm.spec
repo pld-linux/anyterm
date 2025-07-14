@@ -36,7 +36,7 @@ Moduł Apache'a i skrypty tworzące terminal w przeglądarce WWW.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch -P0 -p1
 mv -f browser/.htaccess htaccess
 
 %build
